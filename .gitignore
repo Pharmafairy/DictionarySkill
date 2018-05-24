@@ -1,0 +1,23 @@
+
+#Compiles Classes
+*.class
+
+#Log Files
+*.log
+
+#BlueJ Files
+*.ctxt
+
+#Mobile Tools for java
+*.mtj.tmp/
+
+#Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+#vm crash logs
+hs_err_pid*
