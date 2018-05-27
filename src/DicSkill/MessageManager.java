@@ -6,10 +6,11 @@ import java.util.Iterator;
 /**
  * 27.05.2018
  * TO DO:
- * -	consider category in code
+ * -	consider category in code? -> in DatabaseCommunicator?
  * NEW:
  * -	added: function shortenWishedWord (shortens wished word by one word)
  * -	when ww ends is taken into account
+ * -	function to add/remove preferred cat
  * @author Lia
  */
 
@@ -51,6 +52,7 @@ public class MessageManager {
 	
 	private ArrayList<String> keywords_setting;
 	private ArrayList<String> keywords_whatCanYouDo;
+	private ArrayList<String> keywords_changePrefCat;
 	
 	int positionOfFunction;
 	
@@ -110,6 +112,11 @@ public class MessageManager {
 		keywords_whatCanYouDo = new ArrayList<String>();
 		keywords_whatCanYouDo.add("What can you do");
 		
+		// CHANGE PREFERRED CATEGORIES
+		keywords_changePrefCat = new ArrayList<String>();
+		keywords_changePrefCat.add("preferred category");
+		keywords_changePrefCat.add("preferred categories");
+		
 	}
 	
 	
@@ -133,14 +140,9 @@ public class MessageManager {
 		f = findFunction(msg);
 		if(f == null)
 			return "Sorry, I don't know which function you are asking for.";
-		while(ww == null) {
+		/*if(ww == null) {
 			return "Sorry, I don't know which word you're asking for.";
-		}
-			
-		
-		// Updates the context
-		context.setLastFunctionUsed(f);
-		context.setLastWishedWord(ww);
+		}*/
 		
 
 		/*
@@ -182,6 +184,11 @@ public class MessageManager {
 					result = new String[1];
 					result[0] = "";
 					break;
+				case CHANGE_PREF_CAT:
+					context.changePrefCat(msg);
+					result = new String[1];
+					result[0] = "";
+					break;
 				default:
 					result = new String[1];
 					result[0] = "";
@@ -189,8 +196,13 @@ public class MessageManager {
 				}
 			
 			if(result == null)
-				ww = shortenWishedWord(context, ww); // removes the last word from the wished word
+				ww = shortenWishedWord(ww); // removes the last word from the wished word
+		
 		}while(result == null && ww != null);
+		
+		// Updates the context
+		context.setLastFunctionUsed(f);
+		context.setLastWishedWord(ww);
 		
 		// returns the msg
 		return createMsg(context, resultToString(result));
@@ -285,6 +297,13 @@ public class MessageManager {
 			}
 		}
 		
+		// change preferred category
+		Iterator<String> changePrefCat_iterator = keywords_changePrefCat.iterator();
+		while(changePrefCat_iterator.hasNext()) {
+			if(msg.contains(changePrefCat_iterator.next())) {
+				return Function.CHANGE_PREF_CAT;
+			}
+		}
 		
 		return null;
 	}
@@ -407,7 +426,7 @@ public class MessageManager {
 	 * This function removes the last word from the wished word by looking for a space and then
 	 * removing the space and everything that comes afterwards.
 	 */
-	public String shortenWishedWord(Context context, String ww) {
+	public String shortenWishedWord(String ww) {
 		
 		int shortenPosTo = ww.length(); // shortenPosTo equals the last pos of the ww
 		
@@ -427,8 +446,6 @@ public class MessageManager {
 		}
 		else {
 			String shortenedWishedWord = ww.substring(0, shortenPosTo-1);
-			context.setLastWishedWord(shortenedWishedWord);
-			
 			return shortenedWishedWord;
 		}
 	}
