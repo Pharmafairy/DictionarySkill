@@ -3,6 +3,17 @@ package DicSkill;
 import java.io.Serializable;
 
 /**
+ * 23.05.2018
+ * TO DO:
+ * -	make settings saveable
+ * NEW:
+ * -	setNOW function
+ * 
+ * @author Lia
+ *
+ */
+
+/**
  * 29.04.2018
  * TO DO:
  * -	make settings saveable
@@ -31,12 +42,59 @@ public class Settings implements Serializable
 	}
 	
 	/** Methods **/
-	public void setAll(int x)
+	private void setAll(int x)
 	{
 		this.NOW_translation = x;
 		this.NOW_definition = x;
 		this.NOW_synonyms = x;
 		this.NOW_scrabble = x;
+	}
+	
+	public void setNOW(String msg)
+	{
+		// functionFound will indicate wether or not a function has been found
+		boolean functionFound = false;
+		
+		// x is the number to which the user wants to set one or all NOW to
+		try {
+			int x = Integer.parseInt( msg.substring(msg.lastIndexOf("to")+3) );
+			
+			if(msg.contains("translations")) {
+				NOW_translation = x;
+				functionFound = true;
+				System.out.println("Number of words for translations have been set to "+x);
+			}
+			if(msg.contains("definitions")) {
+				NOW_definition = x;
+				functionFound = true;
+				System.out.println("Number of words for definitions have been set to "+x);
+			}
+			if(msg.contains("synonyms")) {
+				NOW_synonyms = x;
+				functionFound = true;
+				System.out.println("Number of words for synonyms have been set to "+x);
+			}
+			if(msg.contains("scrabble")) {
+				NOW_definition = x;
+				functionFound = true;
+				System.out.println("Number of words for scrabble have been set to "+x);
+			}
+			if(msg.contains("all")) {
+				setAll(x);
+				functionFound = true;
+				System.out.println("Number of words for all have been set to "+x);
+			}
+		}
+		catch (NumberFormatException e)
+		{
+			System.out.print("Sorry, you must set the number of words to a certain number.");
+		}		
+		
+		if(functionFound == false)
+		{
+			System.out.print("Sorry, you must indicate which function you want to change the "
+					+ "number of words for. You may choose: definitons, translations, synonyms, scrabble or all.");
+		}
 	}
 
 	
@@ -45,32 +103,16 @@ public class Settings implements Serializable
 		return NOW_translation;
 	}
 
-	public void setNOW_translation(int nOW_translation) {
-		NOW_translation = nOW_translation;
-	}
-
 	public int getNOW_definition() {
 		return NOW_definition;
-	}
-
-	public void setNOW_definition(int nOW_definition) {
-		NOW_definition = nOW_definition;
 	}
 
 	public int getNOW_synonyms() {
 		return NOW_synonyms;
 	}
 
-	public void setNOW_synonyms(int nOW_synonyms) {
-		NOW_synonyms = nOW_synonyms;
-	}
-
 	public int getNOW_scrabble() {
 		return NOW_scrabble;
-	}
-
-	public void setNOW_scrabble(int nOW_scrabble) {
-		NOW_scrabble = nOW_scrabble;
 	}
 	
 }
