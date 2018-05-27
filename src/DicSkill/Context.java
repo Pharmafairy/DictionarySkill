@@ -37,6 +37,7 @@ public class Context implements Serializable {
 	
 	
 	/** Methods **/
+	
 	/*
 	 * This function finds out what change the user wants to make to the preferred categories by checking
 	 * for keywords and then calls the function which will make the change.
@@ -44,24 +45,24 @@ public class Context implements Serializable {
 	public void changePrefCat(String msg) {
 		
 		if(msg.contains("add")) {
-			String cat = msg.substring( msg.indexOf("add")+4);
-			if( cat.contains(" "))
-				cat = msg.substring(0, cat.indexOf(" ")-1);
+			String cat = msg.substring( msg.indexOf("add")+4 );
+			if( cat.contains(" ") )
+				cat = cat.substring(0, cat.indexOf(" "));
 			addPrefCat( cat );
 		}
 		
 		else if(msg.contains("remove")) {
 			String cat = msg.substring( msg.indexOf("remove")+7);
 			if( cat.contains(" "))
-				cat = msg.substring(0, cat.indexOf(" ")-1);
-			addPrefCat( cat );
+				cat = cat.substring(0, cat.indexOf(" "));
+			removePrefCat( cat );
 		}
 		
 		else if (msg.contains("delete all")) {
 			String cat = msg.substring( msg.indexOf("delete all")+11);
 			if( cat.contains(" "))
-				cat = msg.substring(0, cat.indexOf(" ")-1);
-			addPrefCat( cat );
+				cat = cat.substring(0, cat.indexOf(" "));
+			deleteAllPrefCat();
 		}
 		
 		else {
@@ -74,7 +75,7 @@ public class Context implements Serializable {
 	
 	private void addPrefCat(String cat) {
 		preferredCategory.add(cat);
-		System.out.println(cat + " was addes to your preferred categories.");
+		System.out.println(cat + " was added to your preferred categories.");
 	}
 	
 	private void removePrefCat(String cat) {
@@ -91,8 +92,6 @@ public class Context implements Serializable {
 		preferredCategory.clear();
 		System.out.println("All your preferred categories were deleted.");
 	}
-
-	
 
 	
 	/** Setters and Getters **/
