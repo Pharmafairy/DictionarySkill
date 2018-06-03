@@ -38,6 +38,7 @@ public class Context implements Serializable {
 	private Function lastFunctionUsed;
 	private ArrayList<String> preferredCategory;
 	private String lastWishedWord; // The "Wished Word", is the word, the function will be applied to
+
 	
 	
 	/** Constructor **/
