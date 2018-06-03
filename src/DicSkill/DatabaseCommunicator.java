@@ -3,7 +3,11 @@ package DicSkill;
 /**
  * 01.06.2018
  * TO DO:
- * - Implement Lucene
+ * - Implement Lucene to implement translate
+ * NEW:
+ * - Added function example.
+ * - Fixed a couple of bugs concerning ArraySize.
+ * - Deleted unused functions.
  *
  * @author Walter
  *
@@ -11,26 +15,25 @@ package DicSkill;
 
 /**
  * 21.05.2018
- *
- * Used databases with API:
- * - WordNet database with Rita
- * -
- *
  * TO DO:
- * - Get a translation database
- * - Improve database output
- * - Add a category for words
+ * - Get a translation database.
+ * - Improve database output.
+ * - Add a category for words.
+ * NEW:
+ * - Implemented all functions except for translate.
  *
  * @author Walter
- *
  */
 
 /**
  * 29.04.2018
  * TO DO:
- * -	make use of database
- * -	implement all functions
- * -	function translate is a rough template of what the functions (except extractResult) should look like
+ * -	make use of database.
+ * -	implement all functions.
+ * -	function translate is a rough template of what the functions (except extractResult) should look like.
+ * NEW:
+ * - Created template for this class.
+ *
  * @author Lia
  *
  */
@@ -62,33 +65,37 @@ public class DatabaseCommunicator {
 		pos = null;
 	}
 
-
 	/**
 	 * Methods
 	 **/
 
 	/**
-	 * Shortens the Array to fit the NOW.
+	 * Shortens the Array to fit the NOW. If the output size is smaller,
+	 * the NOW will be ignored.
 	 *
 	 * @param dbOutput
 	 * @return String[] shortened Array
 	 */
 	private String[] extractArray(String dbOutput[], int NOW) {
 
-		String[] returnArray = new String[NOW];
+		String[] returnArray;
 
-		for (int i = 0; i < NOW; i++) {
+		if(NOW < dbOutput.length) {
+			returnArray = new String[NOW];
+		}
+		else {
+			returnArray = new String[dbOutput.length];
+		}
 
-			if (dbOutput[i] != null) {
-				returnArray[i] = dbOutput[i];
-			}
+		for (int i=0; i < returnArray.length; i++) {
+			returnArray[i] = dbOutput[i];
 		}
 
 		return returnArray;
 	}
 
 	/**
-	 * WIP. Translate provides the translation to the wished word
+	 * ---WIP--- Translate provides the translation to the wished word
 	 *
 	 * @param ww  wishedWord
 	 * @param NOW numberOfWords
@@ -96,17 +103,16 @@ public class DatabaseCommunicator {
 	 */
 	public String[] translate(String ww, int NOW) {
 
-		if (!RitaDB.exists(ww)) {
-			return null;
-		}
-
 		String result[] = null;
+
+		// Lucene s job
 
 		return result;
 	}
 
 	/**
 	 * Define provides a definition of the wished word.
+	 * Rita offers several definitions, the first one seems to be the best.
 	 *
 	 * @param ww  wishedWord
 	 * @param NOW numberOfWords
@@ -132,6 +138,7 @@ public class DatabaseCommunicator {
 
 	/**
 	 * GiveSynonyms provides a synonym of the wished word.
+	 * (WordNet does not seem to have a lot of synonyms).
 	 *
 	 * @param ww  wishedWord
 	 * @param NOW numberOfWords
@@ -154,7 +161,31 @@ public class DatabaseCommunicator {
 	}
 
 	/**
+	 * GiveExamples provides an example to the wished word.
+	 *
+	 * @param ww  wishedWord
+	 * @param NOW numberOfWords
+	 * @return String[] databaseOutput[]
+	 */
+	public String[] giveExamples(String ww, int NOW) {
+
+		if (!RitaDB.exists(ww)) {
+			return null;
+		}
+
+		String result[];
+
+		pos = RitaDB.getBestPos(ww);
+		result = RitaDB.getAllExamples(ww, pos);
+
+		result = extractArray(result, NOW);
+
+		return result;
+	}
+
+	/**
 	 * Spell provides the spelling of a word.
+	 * This function does not call a database.
 	 *
 	 * @param ww wishedWord
 	 * @return String[] databaseOutput[]
@@ -172,7 +203,7 @@ public class DatabaseCommunicator {
 	}
 
 	/**
-	 * returns words that start with [letters]
+	 * Returns words that start with [letters]
 	 *
 	 * @param letters the word starts with
 	 * @param NOW     numberOfWords
@@ -184,6 +215,8 @@ public class DatabaseCommunicator {
 
 		pos = RitaDB.getBestPos(letters);
 		result = RitaDB.getStartsWith(letters, pos, NOW);
+
+		result = extractArray(result, NOW);
 
 		return result;
 	}
@@ -202,6 +235,8 @@ public class DatabaseCommunicator {
 		pos = RitaDB.getBestPos(letters);
 		result = RitaDB.getEndsWith(letters, pos, NOW);
 
+		result = extractArray(result, NOW);
+
 		return result;
 	}
 
@@ -218,6 +253,8 @@ public class DatabaseCommunicator {
 
 		pos = RitaDB.getBestPos(letters);
 		result = RitaDB.getContains(letters, pos, NOW);
+
+		result = extractArray(result, NOW);
 
 		return result;
 	}
