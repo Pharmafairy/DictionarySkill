@@ -1,10 +1,16 @@
 package DicSkill;
 
 /**
- * 21.05.2018
+ * 01.06.2018
+ * TO DO:
+ * - Implement Lucene
  *
- * DatabaseCommunicator gets function specific calls. The databases will be searched accordingly
- * and the result will be extracted. Then it will be returned.
+ * @author Walter
+ *
+ */
+
+/**
+ * 21.05.2018
  *
  * Used databases with API:
  * - WordNet database with Rita
@@ -12,6 +18,8 @@ package DicSkill;
  *
  * TO DO:
  * - Get a translation database
+ * - Improve database output
+ * - Add a category for words
  *
  * @author Walter
  *
@@ -32,6 +40,10 @@ import rita.RiWordNet;
 /**
  * DatabaseCommunicator gets function specific calls. The databases will be searched accordingly
  * and the result will be extracted. Then the answer will be returned to the Messagemanager.
+ *
+ * Used databases with API:
+ *  - WordNet database with Rita
+ *  - (Lucene)
  */
 public class DatabaseCommunicator {
 
@@ -39,7 +51,6 @@ public class DatabaseCommunicator {
 	 * VARIABlES
 	 **/
 	private RiWordNet RitaDB;
-
 	private String pos;                // Rita specific: PartsOfSpeach. e.g.: noun, adjective, verb ...
 
 	/**
@@ -55,14 +66,6 @@ public class DatabaseCommunicator {
 	/**
 	 * Methods
 	 **/
-
-	/*
-	 * Makes sense of the gibberish the data base outputs
-	 * String shall always be the result (definition/translation/...)
-	 */
-	private String[] extractResult(String dbOutput[]) {
-		return null;
-	}
 
 	/**
 	 * Shortens the Array to fit the NOW.
