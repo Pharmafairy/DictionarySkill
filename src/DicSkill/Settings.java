@@ -3,6 +3,14 @@ package DicSkill;
 import java.io.Serializable;
 
 /**
+ * 03.06.2018
+ * NEW:
+ * -	Settings is now savable
+ * @author Lia
+ *
+ */
+
+/**
  * 23.05.2018
  * TO DO:
  * -	make settings saveable
@@ -24,6 +32,7 @@ import java.io.Serializable;
 public class Settings implements Serializable  
 {
 	/** VARIABlES **/
+	private static final long serialVersionUID = 5L;
 	
 	// NOW = Number Of Words
 	private int NOW_translation;
