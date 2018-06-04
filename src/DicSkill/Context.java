@@ -4,6 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * 03.06.2018
+ * NEW:
+ * -	Context is now savable
+ * @author Lia
+ *
+ */
+
+/**
  * 27.05.2018
  * NEW:
  * - 	preferresCategories is now of type ArrayList<String>
@@ -25,9 +33,12 @@ import java.util.ArrayList;
 public class Context implements Serializable {
 
 	/** VARIABlES **/
+	private static final long serialVersionUID = 4L;
+	
 	private Function lastFunctionUsed;
 	private ArrayList<String> preferredCategory;
-	private String lastWishedWord; // The Wished Word, is the word, the function will be applied to
+	private String lastWishedWord; // The "Wished Word", is the word, the function will be applied to
+
 	
 	
 	/** Constructor **/
@@ -125,3 +136,4 @@ public class Context implements Serializable {
 	}
 	
 }
+
