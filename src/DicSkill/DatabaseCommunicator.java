@@ -4,6 +4,7 @@ package DicSkill;
  * 01.06.2018
  * TO DO:
  * - Implement Lucene to implement translate
+ * - After recieving output, evaluate it according to preffered category
  * NEW:
  * - Added function example.
  * - Fixed a couple of bugs concerning ArraySize.
