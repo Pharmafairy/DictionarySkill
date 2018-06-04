@@ -430,8 +430,8 @@ public class MessageManager {
 		
 		int shortenPosTo = ww.length(); // shortenPosTo equals the last pos of the ww
 		
-		// finds the position of the first " " starting from the end of the ww
-		while(!(ww.substring(shortenPosTo-1, shortenPosTo)).equals(new String(" ")) &&  shortenPosTo > 0) {
+		// finds the position of the first " " starting from the end/right of the ww
+		while( shortenPosTo > 0 && !(ww.substring(shortenPosTo-1, shortenPosTo).equals(new String(" ")) )) {
 			shortenPosTo--;
 		}
 		
